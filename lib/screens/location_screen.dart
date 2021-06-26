@@ -26,6 +26,7 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(dynamic weatherData) {
+    print('updateUI() called');
     setState(() {
       double temp = weatherData['main']['temp'];
       temperature = temp.toInt();
@@ -57,8 +58,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
+                    onTap: () async {
+                      var weatherData = await weather.getLocationWeather();
+                      updateUI(weatherData);
                     },
                     child: Icon(
                       Icons.near_me,
